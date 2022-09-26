@@ -3,39 +3,29 @@ import java.util.Scanner;
 
 public class Ahorcado {
     public static void main(String[] args) {
-        palabraRandom();
+        inizializar();
     }
-    public static void palabraRandom(){
+    public static String palabraRandom(){
         Scanner es = new Scanner (System.in);
         Random ra = new Random();
         String eleccion = es.nextLine();
-        int numeroAleatorio = ra.nextInt(10);
+        int numeroAleatorio = ra.nextInt(10)-1;
         System.out.println(numeroAleatorio);
         int resultado;
         resultado = numeroAleatorio;
-
-        switch (resultado) {
-            case 0:
-                System.out.println("Computador");
-                break;
-            case 1:
-                System.out.println("Sout");
-                break;
-            case 2:
-                System.out.println("Tijeras");
-                break;
-            case 3:
-                System.out.println("Palabra");
-                break;
-            case 4:
-                System.out.println("Segundo");
-            case 5:
-                System.out.println("");
-            case 6:
-                String clase;
-            case 7:
-                String game;
-            case 8:
-        }
+        return eleccion;
+    }
+    public static int crearAleatorio(){
+        Random ra = new Random();
+        return ra.nextInt(10);
+    }
+    public static String seleccionarPalabra(int aleatorio){
+        String[] palabras={"palabra","segunda","tercera","cuarta","quinta","sexta","caramelo","decimal","nueve","juan"};
+        System.out.println(palabras[aleatorio]);
+        return palabras[aleatorio];
+    }
+    public static void inizializar(){
+        int aleatorio= crearAleatorio();
+        seleccionarPalabra(aleatorio);
     }
 }
