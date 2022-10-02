@@ -3,29 +3,65 @@ import java.util.Scanner;
 
 public class Ahorcado {
     public static void main(String[] args) {
-        inizializar();
+        ejecutarPrincipal();
     }
-    public static String palabraRandom(){
-        Scanner es = new Scanner (System.in);
-        Random ra = new Random();
-        String eleccion = es.nextLine();
-        int numeroAleatorio = ra.nextInt(10)-1;
-        System.out.println(numeroAleatorio);
-        int resultado;
-        resultado = numeroAleatorio;
-        return eleccion;
+    public static char[] separa(String palAzar){
+        char[] letras;
+        letras = new char[palAzar.length()];
+        for(int i = 0; i < palAzar.length(); i++){
+            letras[i] = palAzar.charAt(i);
+        }
+        return letras;
     }
-    public static int crearAleatorio(){
-        Random ra = new Random();
-        return ra.nextInt(10);
+    private static void imprimeOculta(char[] tusRespuestas){
+
+        for(int i = 0; i < tusRespuestas.length; i++){
+            System.out.print(tusRespuestas[i]);
+        }
     }
-    public static String seleccionarPalabra(int aleatorio){
-        String[] palabras={"palabra","segunda","tercera","cuarta","quinta","sexta","caramelo","decimal","nueve","juan"};
-        System.out.println(palabras[aleatorio]);
-        return palabras[aleatorio];
-    }
-    public static void inizializar(){
-        int aleatorio= crearAleatorio();
-        seleccionarPalabra(aleatorio);
+    public static void ejecutarPrincipal(){
+        int intentosTotales = 10; // Constante con el limite de fallos
+        int intentos = 0;
+        int aciertos = 0;
+        Scanner teclado = new Scanner(System.in);
+        teclado.useDelimiter("\n");
+        char resp;
+        Random rnd = new Random();
+        String arrayPalabras[] = {"palabra","segunda","tercera","cuarta","quinta","sexta","caramelo","decimal","nueve","juan"};
+        int alea = rnd.nextInt(10);
+        char[] separada = separa(arrayPalabras[alea]);
+        char[] copia = separa(arrayPalabras[alea]); // Algo auxiliar para mas tarde
+        char[] tusRespuestas = new char[separada.length];
+
+        // Rellena palabras con guiones
+        for(int i = 0; i < tusRespuestas.length; i++){
+            tusRespuestas[i] = '_';
+        }
+        System.out.println("Adivina la palabra!");
+        while(intentos < intentosTotales && aciertos != tusRespuestas.length){
+            imprimeOculta(tusRespuestas);
+            System.out.println("\nIntroduce una letra: ");
+            resp = teclado.next().toLowerCase().charAt(0);
+            for(int i = 0; i < separada.length; i++){
+                if(separada[i]==resp){
+                    tusRespuestas[i] = separada[i];
+                    separada[i] = ' ';
+                    aciertos++;
+                }
+            }
+            intentos++;
+        }
+        // Si se hacierta todas imprime mensaje
+        if(aciertos == tusRespuestas.length){
+            System.out.print("\nFalicidades!! has acertado la palabra: ");
+            imprimeOculta(tusRespuestas);
+        }
+        // Si no otro
+        else{
+            System.out.print("\nHas fallado! la palabra era: ");
+            for(int i = 0; i < copia.length; i++){
+                System.out.print(copia[i] + " ");
+            }
+        }
     }
 }
